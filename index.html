@@ -13,6 +13,26 @@
       <button id="resetButton">Reset</button>
     </div>
     <select name="category" id="category"></select>
+
+      <!--Filtro per prezzo -->
+<div class="price-filter">
+      <label for="minPrice">
+        Prezzo min:
+        <input
+          type="number"
+          id="minPrice"
+        />
+      </label>
+      <label for="maxPrice">
+        Prezzo max:
+        <input
+          type="number"
+          id="maxPrice"
+        />
+      </label>
+      <button id="filterPriceButton">Filtra prezzo</button>
+    </div>
+
     <div id = "container"></div>
     <script src="index.js"></script>
   </body>

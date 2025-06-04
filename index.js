@@ -4,6 +4,10 @@ const reset = document.getElementById("resetButton");
 const input = document.getElementById("search");
 const container = document.getElementById("container");
 const select = document.getElementById("category");
+const minInput = document.getElementById("minPrice");     // input per prezzo minimo
+const maxInput = document.getElementById("maxPrice");     // input per prezzo massimo
+const filterPriceButton = document.getElementById("filterPriceButton");   // pulsante per filtrare
+
 
 let categories = [];
 
@@ -90,13 +94,37 @@ reset.addEventListener("click", ()=>{
   fetchProducts().then(()=> renderProducts(products)).catch((error) => console.error(error));
 });
 
+ //ESERCIZIO PER CASA: creare due campi input di type number e filtrare i prodotti se rientrano nel range minimo e massimo di questi due campi input
+
 async function filterByPrice(products) {
   try{
-    //creare due campi input di type number e filtrare i prodotti se rientrano nel range minimo e massimo di questi due campi input
+   
+    //Legge e converte in numero i valori degli input
+    const minValue = parseFloat(minInput.value);
+    const maxValue = parseFloat(maxInput.value);
+
+    //Filtra l’array products: mantiene solo quelli con price compreso tra minValue e maxValue
+      const filteredProducts = products.filter((x) => {
+      const price = parseFloat(x.price); // converte price (string) in numero
+      return price >= minValue && price <= maxValue;
+    });
+
+    //Se l’array filtrato è vuoto, mostra un messaggio in un tag p
+    if (filteredProducts.length === 0) {
+      container.innerHTML = "<p>Nessun prodotto nel range di prezzo selezionato</p>";
+      return;
+    }
+    //renderizza i prodotti filtrati se l'array non è vuoto
+    await renderProducts(filteredProducts);
   } catch (error){
     console.error(error);
   }
 }
+
+//Evento che associa il click del pulsante filterPriceButton alla funzione filterByPrice
+filterPriceButton.addEventListener("click", () => {
+  filterByPrice(products).catch((error) => console.error(error));
+});
 
 select.addEventListener("change", ()=>{
   const selectedCategory = select.value;
