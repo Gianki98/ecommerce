@@ -1,17 +1,23 @@
+let products = [];
+const button = document.getElementById("searchButton");
+const input = document.getElementById("search");
 const container = document.getElementById("container");
 async function fetchProducts() {
   try {
     const response = await fetch("https://fakestoreapi.com/products");
     const result = await response.json();
-    return result;
+    products = result;
+    console.log(products);
   } catch (error) {
     console.error(error);
   }
 }
 
-async function renderProducts() {
+fetchProducts().then(()=> renderProducts(products)).catch((error) => console.error(error));
+console.log (products);
+async function renderProducts(products) {
   try {
-    const products = await fetchProducts();
+    container.innerHTML = "";
     products.forEach((x) => {
       const card = document.createElement("div");
       const title = document.createElement("h6");
@@ -36,9 +42,28 @@ async function renderProducts() {
       container.appendChild(card);
 
     });
+    
   } catch (error) {
     console.error(error);
   }
 }
 
-renderProducts().catch((error) => console.error(error));
+async function searchProducts (products) {
+  try {
+    const searchItem = input.value.toLowerCase();
+    const productFilter = products.filter ((x) => {
+      x.title.includes (searchItem)
+    })
+    renderProducts(productFilter);
+
+
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+button.addEventListener("click", () => {
+  searchProducts(products).catch((error) => console.error(error));
+})
+
+
