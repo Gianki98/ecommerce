@@ -1,20 +1,35 @@
 let products = [];
 const button = document.getElementById("searchButton");
+const reset = document.getElementById("resetButton");
 const input = document.getElementById("search");
 const container = document.getElementById("container");
+const select = document.getElementById("category");
+
+let categories = [];
+
 async function fetchProducts() {
   try {
     const response = await fetch("https://fakestoreapi.com/products");
     const result = await response.json();
     products = result;
-    console.log(products);
+    
   } catch (error) {
     console.error(error);
   }
 }
 
-fetchProducts().then(()=> renderProducts(products)).catch((error) => console.error(error));
-console.log (products);
+fetchProducts().then(()=> renderProducts(products)).then(()=> products.forEach((x)=>{
+  if(!categories.includes(x.category)){
+    categories.push(x.category);
+    const option = document.createElement("option");
+    option.innerText= x.category;
+    option.value = x.category;
+    select.appendChild(option);
+  }
+  
+})).catch((error) => console.error(error));
+
+
 async function renderProducts(products) {
   try {
     container.innerHTML = "";
@@ -51,11 +66,16 @@ async function renderProducts(products) {
 async function searchProducts (products) {
   try {
     const searchItem = input.value.toLowerCase();
-    const productFilter = products.filter ((x) => {
-      x.title.includes (searchItem)
+    const productFilter = products.filter((x) => {
+     return x.title.toLowerCase().includes(searchItem) //mancava il return e il tolowercase
     })
-    renderProducts(productFilter);
+    
+    if(productFilter.length === 0){
+      container.innerHTML = "<p>Nessun prodotto disponibile</p>";
+      return;
+    }
 
+    renderProducts(productFilter);
 
   } catch (error) {
     console.error(error);
@@ -65,5 +85,27 @@ async function searchProducts (products) {
 button.addEventListener("click", () => {
   searchProducts(products).catch((error) => console.error(error));
 })
+
+reset.addEventListener("click", ()=>{
+  fetchProducts().then(()=> renderProducts(products)).catch((error) => console.error(error));
+});
+
+async function filterByPrice(products) {
+  try{
+    //creare due campi input di type number e filtrare i prodotti se rientrano nel range minimo e massimo di questi due campi input
+  } catch (error){
+    console.error(error);
+  }
+}
+
+select.addEventListener("change", ()=>{
+  const selectedCategory = select.value;
+  const filteredProduct = products.filter((x)=> x.category === selectedCategory);
+  renderProducts(filteredProduct);
+})
+
+
+
+ 
 
 
