@@ -1,4 +1,5 @@
 let products = [];
+let chart = [];
 const button = document.getElementById("searchButton");
 const reset = document.getElementById("resetButton");
 const input = document.getElementById("search");
@@ -7,6 +8,7 @@ const select = document.getElementById("category");
 const minInput = document.getElementById("minPrice");     // input per prezzo minimo
 const maxInput = document.getElementById("maxPrice");     // input per prezzo massimo
 const filterPriceButton = document.getElementById("filterPriceButton");   // pulsante per filtrare
+
 
 
 let categories = [];
@@ -51,7 +53,8 @@ async function renderProducts(products) {
       price.textContent = `${x.price} $`;
       buy.textContent = "Buy";
       buy.addEventListener("click", () => {
-        localStorage.setItem("chart", JSON.stringify(x))
+        chart.push(x);
+        localStorage.setItem("chart", JSON.stringify(chart))
       });
       imageContainer.appendChild(image);
       card.appendChild(imageContainer);
@@ -99,7 +102,15 @@ reset.addEventListener("click", ()=>{
 async function filterByPrice(products) {
   try{
    
-    //Legge e converte in numero i valori degli input
+    if (!minInput.value) {
+       minInput.value = 0;
+    }
+
+    if (!maxInput.value) {
+       maxInput.value = 1000;
+    }
+
+    //Legge e converte in numero i valori degli input DI DEFAULT SONO STRING ANCHE SE IL TYPE E' NUMBER!!!!!!
     const minValue = parseFloat(minInput.value);
     const maxValue = parseFloat(maxInput.value);
 
@@ -115,7 +126,7 @@ async function filterByPrice(products) {
       return;
     }
     //renderizza i prodotti filtrati se l'array non è vuoto
-    await renderProducts(filteredProducts);
+    renderProducts(filteredProducts);
   } catch (error){
     console.error(error);
   }
@@ -131,9 +142,4 @@ select.addEventListener("change", ()=>{
   const filteredProduct = products.filter((x)=> x.category === selectedCategory);
   renderProducts(filteredProduct);
 })
-
-
-
- 
-
 
