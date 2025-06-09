@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form di registrazione</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <form action="" id="formRegistrazione">
+      <label for="nome">Nome</label>
+      <input
+        type="text"
+        required
+        name="nome"
+        id="nome"
+        placeholder="Inserisci qui il tuo nome"
+      />
+      <label for="cognome">Cognome</label>
+      <input
+        type="text"
+        required
+        name="cognome"
+        id="cognome"
+        placeholder="Inserisci qui il tuo cognome"
+      />
+      <label for="data">Data di nascita</label>
+      <input type="date" required name="data" id="data" />
+      <label for="username">Username</label>
+      <input
+        type="text"
+        required
+        name="username"
+        id="username"
+        placeholder="Username"
+      />
+      <label for="email">Email</label>
+      <input
+        type="email"
+        required
+        id="email"
+        name="email"
+        placeholder="Inserisci qui l'email"
+      />
+      <label for="psw">Password</label>
+      <input
+        type="password"
+        name="psw"
+        id="psw"
+        required
+        placeholder="Inserisci Password"
+      />
+      <label for="privacy">Privacy</label>
+      <input type="checkbox" required checked />
+      <button type="submit">Registrati</button>
+    </form>
+    <script src="/registrazione.js"></script>
+  </body>
+</html>

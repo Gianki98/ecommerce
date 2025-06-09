@@ -41,5 +41,3 @@ if (localChart.length > 0) {
   });
   total.innerText = totaleCarrello;
 }
-
-// La card da inserire deve contenere: img, title, price e quantity.
