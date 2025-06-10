@@ -13,6 +13,7 @@ form.addEventListener("submit", (e) => {
   if (userExist) {
     console.log(`Il Login e' avvenuto con successo.`);
     localStorage.setItem("user", JSON.stringify(userExist));
+    window.location.href = "http://localhost:5501/dashboard.html"; 
   } else {
     console.error(`Credenziali errate!`);
   }
