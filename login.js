@@ -12,6 +12,7 @@ form.addEventListener("submit", (e) => {
   );
   if (userExist) {
     console.log(`Il Login e' avvenuto con successo.`);
+    localStorage.setItem("user", JSON.stringify(userExist));
   } else {
     console.error(`Credenziali errate!`);
   }
